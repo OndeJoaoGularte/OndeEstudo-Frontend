@@ -4,18 +4,21 @@ import { Award } from 'lucide-react';
 import type { Subject, Grade } from '../../../types/entities';
 import { ProgressIcon } from '../user/ProgressIcon';
 
+// Interface para definir que este componente espera receber um objeto matéria e um objeto série
 interface GradeCardProps {
     subject: Subject;
     grade: Grade;
 }
 
 export function GradeCard({ subject, grade }: GradeCardProps) {
+    // Seta o estado inicial do card
     const [isFlipped, setIsFlipped] = React.useState(false);
-
+    // Controla a ação de virar o card
     const handleFlip = () => {
         setIsFlipped(!isFlipped);
     };
 
+    // Pega a lista de unidades do objeto série e a ordena baseada no orderIndex
     const units = [...(grade.units || [])].sort((a, b) => a.orderIndex - b.orderIndex);
 
     return (

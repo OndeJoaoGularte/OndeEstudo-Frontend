@@ -3,19 +3,24 @@ import { Link } from '@tanstack/react-router';
 import { ChevronDown } from 'lucide-react';
 import type { Subject } from '../../../types/entities';
 
+// Interface para definir que este componente espera receber um objeto matéria
 interface SubjectCardProps {
     subject: Subject;
 }
 
+// Função para formatar visualmente os nomes das séries, removendo a palavra "Ano" para economizar espaço
 function formatGradeName(name: string) {
     return name.replace(/ Ano /i, ' ');
 }
 
 export function SubjectCard({ subject }: SubjectCardProps) {
+    // Seta o estado inicial do accordion do card
     const [expanded, setExpanded] = React.useState(false);
 
+    // Pega a lista de séries do objeto matéria e a ordena baseada no orderIndex
     const grades = [...(subject.grades || [])].sort((a, b) => a.orderIndex - b.orderIndex);
 
+    // Soma o total de unidades de todas as séries da matéria para exibir no card
     const totalUnits = grades.reduce((acc, grade) => acc + (grade.units?.length || 0), 0);
 
     return (
@@ -70,6 +75,7 @@ export function SubjectCard({ subject }: SubjectCardProps) {
                                             params={{ subjectId: subject.id, gradeId: grade.id }}
                                             className="btn btn-outline btn-sm rounded-full font-normal border-base-300 text-base-content/70 hover:bg-secondary hover:text-secondary-content hover:border-secondary transition-colors duration-300"
                                         >
+                                            // Formata o nome da série para exibição
                                             {formatGradeName(grade.name)}
                                         </Link>
                                     ))}

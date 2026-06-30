@@ -5,15 +5,19 @@ import { GradeCard } from '../../components/ui/cards/GradeCard';
 import type { Subject } from '../../types/entities';
 import { api } from '../../lib/api';
 
+// O Tanstack Router mapeia o símbolo de dólar ($subjectId) para um parâmetro dinâmico na URL
 export const Route = createFileRoute('/materias/$subjectId/')({
     component: function SubjectPage() {
+        // Extrai o ID da matéria atual diretamente da URL com 100% de Type Safety
         const { subjectId } = Route.useParams();
 
+        // Busca apenas os dados (com suas séries e unidades aninhadas) da matéria correspondente ao ID
         const {
             data: subject,
             isLoading,
             isError,
         } = useQuery<Subject>({
+            // A queryKey inclui o ID para que o cache saiba diferenciar Matemática de História, por exemplo
             queryKey: ['subject', subjectId],
             queryFn: async () => {
                 const response = await api.get(`/subjects/${subjectId}`);
@@ -60,12 +64,20 @@ export const Route = createFileRoute('/materias/$subjectId/')({
                                 <li className="font-medium text-base-content">{subject.name}</li>
                             </ul>
                         </div>
+                        {/* Título e Descrição da matéria */}
                         <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">{subject.name}</h1>
                         <p className="text-lg text-base-content/70 mb-10 leading-relaxed">{subject.longDescription}</p>
+
+                        {/* Grid de Séries */}
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                             {subject.grades?.map((grade) => (
                                 <GradeCard key={grade.id} subject={subject} grade={grade} />
                             ))}
+                            {(!subject.grades || subject.grades.length === 0) && (
+                                <div className="col-span-full py-10 text-center bg-base-200/50 rounded-2xl border border-base-200">
+                                    <p className="text-base-content/60">Nenhuma série cadastrada para esta matéria ainda.</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
