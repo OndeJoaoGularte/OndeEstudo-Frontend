@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '../stores/useAuthStore';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://onde-estudo-backend.onrender.com',
 });
 
 // Interceptor de Requisição, uma função que roda automaticamente antes de qualquer requisição
