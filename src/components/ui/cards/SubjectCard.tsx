@@ -75,7 +75,6 @@ export function SubjectCard({ subject }: SubjectCardProps) {
                                             params={{ subjectId: subject.id, gradeId: grade.id }}
                                             className="btn btn-outline btn-sm rounded-full font-normal border-base-300 text-base-content/70 hover:bg-secondary hover:text-secondary-content hover:border-secondary transition-colors duration-300"
                                         >
-                                            // Formata o nome da série para exibição
                                             {formatGradeName(grade.name)}
                                         </Link>
                                     ))}

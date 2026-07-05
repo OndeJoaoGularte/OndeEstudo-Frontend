@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as MateriasSubjectIdIndexRouteImport } from './routes/materias/$subjectId.index'
 import { Route as MateriasSubjectIdGradeIdIndexRouteImport } from './routes/materias/$subjectId.$gradeId.index'
 import { Route as MateriasSubjectIdGradeIdUnitIdIndexRouteImport } from './routes/materias/$subjectId.$gradeId.$unitId.index'
+import { Route as MateriasSubjectIdGradeIdUnitIdLessonIdIndexRouteImport } from './routes/materias/$subjectId.$gradeId.$unitId.$lessonId.index'
 
 const IndexLazyRouteImport = createFileRoute('/')()
 
@@ -39,18 +40,26 @@ const MateriasSubjectIdGradeIdUnitIdIndexRoute =
     path: '/materias/$subjectId/$gradeId/$unitId/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute =
+  MateriasSubjectIdGradeIdUnitIdLessonIdIndexRouteImport.update({
+    id: '/materias/$subjectId/$gradeId/$unitId/$lessonId/',
+    path: '/materias/$subjectId/$gradeId/$unitId/$lessonId/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/materias/$subjectId/': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId/': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId/': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
+  '/materias/$subjectId/$gradeId/$unitId/$lessonId/': typeof MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/materias/$subjectId': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
+  '/materias/$subjectId/$gradeId/$unitId/$lessonId': typeof MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -58,6 +67,7 @@ export interface FileRoutesById {
   '/materias/$subjectId/': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId/': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId/': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
+  '/materias/$subjectId/$gradeId/$unitId/$lessonId/': typeof MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -66,18 +76,21 @@ export interface FileRouteTypes {
     | '/materias/$subjectId/'
     | '/materias/$subjectId/$gradeId/'
     | '/materias/$subjectId/$gradeId/$unitId/'
+    | '/materias/$subjectId/$gradeId/$unitId/$lessonId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/materias/$subjectId'
     | '/materias/$subjectId/$gradeId'
     | '/materias/$subjectId/$gradeId/$unitId'
+    | '/materias/$subjectId/$gradeId/$unitId/$lessonId'
   id:
     | '__root__'
     | '/'
     | '/materias/$subjectId/'
     | '/materias/$subjectId/$gradeId/'
     | '/materias/$subjectId/$gradeId/$unitId/'
+    | '/materias/$subjectId/$gradeId/$unitId/$lessonId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -85,6 +98,7 @@ export interface RootRouteChildren {
   MateriasSubjectIdIndexRoute: typeof MateriasSubjectIdIndexRoute
   MateriasSubjectIdGradeIdIndexRoute: typeof MateriasSubjectIdGradeIdIndexRoute
   MateriasSubjectIdGradeIdUnitIdIndexRoute: typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
+  MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute: typeof MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -117,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MateriasSubjectIdGradeIdUnitIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/materias/$subjectId/$gradeId/$unitId/$lessonId/': {
+      id: '/materias/$subjectId/$gradeId/$unitId/$lessonId/'
+      path: '/materias/$subjectId/$gradeId/$unitId/$lessonId'
+      fullPath: '/materias/$subjectId/$gradeId/$unitId/$lessonId/'
+      preLoaderRoute: typeof MateriasSubjectIdGradeIdUnitIdLessonIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -126,6 +147,8 @@ const rootRouteChildren: RootRouteChildren = {
   MateriasSubjectIdGradeIdIndexRoute: MateriasSubjectIdGradeIdIndexRoute,
   MateriasSubjectIdGradeIdUnitIdIndexRoute:
     MateriasSubjectIdGradeIdUnitIdIndexRoute,
+  MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute:
+    MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
