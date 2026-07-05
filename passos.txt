@@ -1,0 +1,5 @@
+páginas das aulas (se basear na khan academy e cursos da alura)
+basear o conteúdo na documentação do tanstack router, com a opção de sugestão de ajustes
+barra de pesquisa funcional
+sistema de progresso
+criar um modal para a escolha de temas

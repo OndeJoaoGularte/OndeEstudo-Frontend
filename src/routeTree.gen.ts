@@ -11,6 +11,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MateriasSubjectIdIndexRouteImport } from './routes/materias/$subjectId.index'
 import { Route as MateriasSubjectIdGradeIdIndexRouteImport } from './routes/materias/$subjectId.$gradeId.index'
 import { Route as MateriasSubjectIdGradeIdUnitIdIndexRouteImport } from './routes/materias/$subjectId.$gradeId.$unitId.index'
@@ -18,11 +21,25 @@ import { Route as MateriasSubjectIdGradeIdUnitIdLessonIdIndexRouteImport } from 
 
 const IndexLazyRouteImport = createFileRoute('/')()
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
 const MateriasSubjectIdIndexRoute = MateriasSubjectIdIndexRouteImport.update({
   id: '/materias/$subjectId/',
   path: '/materias/$subjectId/',
@@ -49,6 +66,8 @@ const MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
   '/materias/$subjectId/': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId/': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId/': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -56,6 +75,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
   '/materias/$subjectId': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -64,6 +85,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/register': typeof AuthRegisterRoute
   '/materias/$subjectId/': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId/': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId/': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -73,6 +97,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/login'
+    | '/register'
     | '/materias/$subjectId/'
     | '/materias/$subjectId/$gradeId/'
     | '/materias/$subjectId/$gradeId/$unitId/'
@@ -80,6 +106,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
+    | '/register'
     | '/materias/$subjectId'
     | '/materias/$subjectId/$gradeId'
     | '/materias/$subjectId/$gradeId/$unitId'
@@ -87,6 +115,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_auth'
+    | '/_auth/login'
+    | '/_auth/register'
     | '/materias/$subjectId/'
     | '/materias/$subjectId/$gradeId/'
     | '/materias/$subjectId/$gradeId/$unitId/'
@@ -95,6 +126,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  AuthRoute: typeof AuthRouteWithChildren
   MateriasSubjectIdIndexRoute: typeof MateriasSubjectIdIndexRoute
   MateriasSubjectIdGradeIdIndexRoute: typeof MateriasSubjectIdGradeIdIndexRoute
   MateriasSubjectIdGradeIdUnitIdIndexRoute: typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -103,12 +135,33 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/materias/$subjectId/': {
       id: '/materias/$subjectId/'
@@ -141,8 +194,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AuthRoute: AuthRouteWithChildren,
   MateriasSubjectIdIndexRoute: MateriasSubjectIdIndexRoute,
   MateriasSubjectIdGradeIdIndexRoute: MateriasSubjectIdGradeIdIndexRoute,
   MateriasSubjectIdGradeIdUnitIdIndexRoute:

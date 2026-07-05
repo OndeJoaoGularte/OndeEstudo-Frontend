@@ -121,7 +121,7 @@ export function Topbar() {
                                     <span className="text-base-content/60 text-xs truncate block font-normal">{user?.email}</span>
                                 </li>
                                 <li>
-                                    <Link to="/dashboard" className="text-primary font-medium hover:bg-primary/10 transition-colors">
+                                    <Link to="/dashboard" className="hover:text-primary transition-colors">
                                         <LayoutDashboard className="w-4 h-4 mr-2" />
                                         Painel de Controle
                                     </Link>
@@ -147,14 +147,14 @@ export function Topbar() {
                             </>
                         ) : (
                             <>
-                                {/* Login e Registro com o atributo "search" do Tanstack Router para definir a rota */}
+                                {/* Login e Registro */}
                                 <li>
-                                    <Link to="/auth" search={{ mode: 'login' }} className="hover:text-primary transition-colors">
+                                    <Link to="/login" className="hover:text-primary transition-colors">
                                         Entrar
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/auth" search={{ mode: 'register' }} className="text-primary font-bold mt-1 hover:bg-primary hover:text-primary-content transition-colors">
+                                    <Link to="/register" className="text-primary font-bold mt-1 hover:bg-primary hover:text-primary-content transition-colors">
                                         Criar Conta
                                     </Link>
                                 </li>
