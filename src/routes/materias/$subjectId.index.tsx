@@ -12,17 +12,14 @@ export const Route = createFileRoute('/materias/$subjectId/')({
         const { subjectId } = Route.useParams();
 
         // Busca apenas os dados (com suas séries e unidades aninhadas) da matéria correspondente ao ID
-        const {
-            data: subject,
-            isLoading,
-            isError,
-        } = useQuery<Subject>({
-            // A queryKey inclui o ID para que o cache saiba diferenciar Matemática de História, por exemplo
+        const { data: subject, isLoading, isError } = useQuery<Subject>({
+            // A queryKey inclui o ID para que o cache saiba diferenciar cada matéria
             queryKey: ['subject', subjectId],
             queryFn: async () => {
                 const response = await api.get(`/subjects/${subjectId}`);
                 return response.data;
             },
+            enabled: !!subjectId,
         });
 
         if (isLoading) {
@@ -69,16 +66,18 @@ export const Route = createFileRoute('/materias/$subjectId/')({
                         <p className="text-lg text-base-content/70 mb-10 leading-relaxed">{subject.longDescription}</p>
 
                         {/* Grid de Séries */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            {subject.grades?.map((grade) => (
-                                <GradeCard key={grade.id} subject={subject} grade={grade} />
-                            ))}
-                            {(!subject.grades || subject.grades.length === 0) && (
-                                <div className="col-span-full py-10 text-center bg-base-200/50 rounded-2xl border border-base-200">
-                                    <p className="text-base-content/60">Nenhuma série cadastrada para esta matéria ainda.</p>
-                                </div>
-                            )}
-                        </div>
+                        {(!subject.grades || subject.grades.length === 0) ? (
+                            <div className="py-10 text-center bg-base-200/50 rounded-2xl border border-base-200">
+                                <p className="text-base-content/60">Nenhuma série cadastrada para esta matéria ainda.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {subject.grades.map((grade) => (
+                                    <GradeCard key={grade.id} subject={subject} grade={grade} />
+                                ))}
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </div>

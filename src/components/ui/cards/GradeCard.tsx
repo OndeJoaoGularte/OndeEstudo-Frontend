@@ -13,10 +13,9 @@ interface GradeCardProps {
 export function GradeCard({ subject, grade }: GradeCardProps) {
     // Seta o estado inicial do card
     const [isFlipped, setIsFlipped] = React.useState(false);
+
     // Controla a ação de virar o card
-    const handleFlip = () => {
-        setIsFlipped(!isFlipped);
-    };
+    const handleFlip = () => setIsFlipped(!isFlipped);
 
     // Pega a lista de unidades do objeto série e a ordena baseada no orderIndex
     const units = [...(grade.units || [])].sort((a, b) => a.orderIndex - b.orderIndex);
@@ -66,9 +65,9 @@ export function GradeCard({ subject, grade }: GradeCardProps) {
                             {grade.name}
                         </Link>
 
-                        {/* Lista de Unidades */}
                         <hr className="border-base-200 my-3 mx-2" />
 
+                        {/* Lista de Unidades */}
                         {units.length === 0 ? (
                             <div className="flex-1 flex items-center justify-center">
                                 <p className="text-sm text-base-content/60">Conteúdo em desenvolvimento.</p>
