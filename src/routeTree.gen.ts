@@ -11,7 +11,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardUsuariosRouteImport } from './routes/dashboard/usuarios'
+import { Route as DashboardUnidadesRouteImport } from './routes/dashboard/unidades'
+import { Route as DashboardSeriesRouteImport } from './routes/dashboard/series'
+import { Route as DashboardMateriasRouteImport } from './routes/dashboard/materias'
+import { Route as DashboardAulasRouteImport } from './routes/dashboard/aulas'
 import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MateriasSubjectIdIndexRouteImport } from './routes/materias/$subjectId.index'
@@ -21,6 +28,11 @@ import { Route as MateriasSubjectIdGradeIdUnitIdLessonIdIndexRouteImport } from 
 
 const IndexLazyRouteImport = createFileRoute('/')()
 
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
@@ -30,6 +42,36 @@ const IndexLazyRoute = IndexLazyRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardUsuariosRoute = DashboardUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardUnidadesRoute = DashboardUnidadesRouteImport.update({
+  id: '/unidades',
+  path: '/unidades',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSeriesRoute = DashboardSeriesRouteImport.update({
+  id: '/series',
+  path: '/series',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMateriasRoute = DashboardMateriasRouteImport.update({
+  id: '/materias',
+  path: '/materias',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAulasRoute = DashboardAulasRouteImport.update({
+  id: '/aulas',
+  path: '/aulas',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -66,8 +108,15 @@ const MateriasSubjectIdGradeIdUnitIdLessonIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/dashboard/aulas': typeof DashboardAulasRoute
+  '/dashboard/materias': typeof DashboardMateriasRoute
+  '/dashboard/series': typeof DashboardSeriesRoute
+  '/dashboard/unidades': typeof DashboardUnidadesRoute
+  '/dashboard/usuarios': typeof DashboardUsuariosRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/materias/$subjectId/': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId/': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId/': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -77,6 +126,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/dashboard/aulas': typeof DashboardAulasRoute
+  '/dashboard/materias': typeof DashboardMateriasRoute
+  '/dashboard/series': typeof DashboardSeriesRoute
+  '/dashboard/unidades': typeof DashboardUnidadesRoute
+  '/dashboard/usuarios': typeof DashboardUsuariosRoute
+  '/dashboard': typeof DashboardIndexRoute
   '/materias/$subjectId': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -86,8 +141,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
   '/_auth': typeof AuthRouteWithChildren
+  '/dashboard': typeof DashboardRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/dashboard/aulas': typeof DashboardAulasRoute
+  '/dashboard/materias': typeof DashboardMateriasRoute
+  '/dashboard/series': typeof DashboardSeriesRoute
+  '/dashboard/unidades': typeof DashboardUnidadesRoute
+  '/dashboard/usuarios': typeof DashboardUsuariosRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/materias/$subjectId/': typeof MateriasSubjectIdIndexRoute
   '/materias/$subjectId/$gradeId/': typeof MateriasSubjectIdGradeIdIndexRoute
   '/materias/$subjectId/$gradeId/$unitId/': typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -97,8 +159,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dashboard'
     | '/login'
     | '/register'
+    | '/dashboard/aulas'
+    | '/dashboard/materias'
+    | '/dashboard/series'
+    | '/dashboard/unidades'
+    | '/dashboard/usuarios'
+    | '/dashboard/'
     | '/materias/$subjectId/'
     | '/materias/$subjectId/$gradeId/'
     | '/materias/$subjectId/$gradeId/$unitId/'
@@ -108,6 +177,12 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/dashboard/aulas'
+    | '/dashboard/materias'
+    | '/dashboard/series'
+    | '/dashboard/unidades'
+    | '/dashboard/usuarios'
+    | '/dashboard'
     | '/materias/$subjectId'
     | '/materias/$subjectId/$gradeId'
     | '/materias/$subjectId/$gradeId/$unitId'
@@ -116,8 +191,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
+    | '/dashboard'
     | '/_auth/login'
     | '/_auth/register'
+    | '/dashboard/aulas'
+    | '/dashboard/materias'
+    | '/dashboard/series'
+    | '/dashboard/unidades'
+    | '/dashboard/usuarios'
+    | '/dashboard/'
     | '/materias/$subjectId/'
     | '/materias/$subjectId/$gradeId/'
     | '/materias/$subjectId/$gradeId/$unitId/'
@@ -127,6 +209,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AuthRoute: typeof AuthRouteWithChildren
+  DashboardRoute: typeof DashboardRouteWithChildren
   MateriasSubjectIdIndexRoute: typeof MateriasSubjectIdIndexRoute
   MateriasSubjectIdGradeIdIndexRoute: typeof MateriasSubjectIdGradeIdIndexRoute
   MateriasSubjectIdGradeIdUnitIdIndexRoute: typeof MateriasSubjectIdGradeIdUnitIdIndexRoute
@@ -135,6 +218,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth': {
       id: '/_auth'
       path: ''
@@ -148,6 +238,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/usuarios': {
+      id: '/dashboard/usuarios'
+      path: '/usuarios'
+      fullPath: '/dashboard/usuarios'
+      preLoaderRoute: typeof DashboardUsuariosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/unidades': {
+      id: '/dashboard/unidades'
+      path: '/unidades'
+      fullPath: '/dashboard/unidades'
+      preLoaderRoute: typeof DashboardUnidadesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/series': {
+      id: '/dashboard/series'
+      path: '/series'
+      fullPath: '/dashboard/series'
+      preLoaderRoute: typeof DashboardSeriesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/materias': {
+      id: '/dashboard/materias'
+      path: '/materias'
+      fullPath: '/dashboard/materias'
+      preLoaderRoute: typeof DashboardMateriasRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/aulas': {
+      id: '/dashboard/aulas'
+      path: '/aulas'
+      fullPath: '/dashboard/aulas'
+      preLoaderRoute: typeof DashboardAulasRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/_auth/register': {
       id: '/_auth/register'
@@ -206,9 +338,32 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface DashboardRouteChildren {
+  DashboardAulasRoute: typeof DashboardAulasRoute
+  DashboardMateriasRoute: typeof DashboardMateriasRoute
+  DashboardSeriesRoute: typeof DashboardSeriesRoute
+  DashboardUnidadesRoute: typeof DashboardUnidadesRoute
+  DashboardUsuariosRoute: typeof DashboardUsuariosRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAulasRoute: DashboardAulasRoute,
+  DashboardMateriasRoute: DashboardMateriasRoute,
+  DashboardSeriesRoute: DashboardSeriesRoute,
+  DashboardUnidadesRoute: DashboardUnidadesRoute,
+  DashboardUsuariosRoute: DashboardUsuariosRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AuthRoute: AuthRouteWithChildren,
+  DashboardRoute: DashboardRouteWithChildren,
   MateriasSubjectIdIndexRoute: MateriasSubjectIdIndexRoute,
   MateriasSubjectIdGradeIdIndexRoute: MateriasSubjectIdGradeIdIndexRoute,
   MateriasSubjectIdGradeIdUnitIdIndexRoute:
