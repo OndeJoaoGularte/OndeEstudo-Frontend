@@ -1,75 +1,51 @@
-# React + TypeScript + Vite
+# 📚 Plataforma: Onde Estudo? — Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-38BDF8?logo=tailwindcss&logoColor=white)
+![Contexto](https://img.shields.io/badge/Contexto-Projeto%20Pessoal-blueviolet)
+![Status](https://img.shields.io/badge/Status-Em%20andamento-yellow)
 
-Currently, two official plugins are available:
+Interface da plataforma **Onde Estudo?**, um projeto pessoal inspirado na experiência da W3Schools, mas voltado ao ensino brasileiro e alinhado à **BNCC**. Este repositório concentra o Front-end da aplicação, consumindo a API do [Back-end](https://github.com/OndeJoaoGularte/OndeEstudo-Backend).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🎯 Objetivo do Projeto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Oferecer uma experiência de estudo clara e navegável, em que o aluno percorra matérias, séries, unidades e aulas de forma intuitiva, com autenticação, área administrativa e uma interface moderna, responsiva e fácil de evoluir.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. **Autenticação:** Telas de login e registro, com sessão persistida no navegador.
+2. **Navegação de estudos:** Fluxo por matéria → série → unidade → aula.
+3. **Dashboard administrativo:** Gestão de matérias, séries, unidades, aulas e usuários.
+4. **Cards e sidebars de conteúdo:** Componentes para listar e navegar pela hierarquia escolar.
+5. **Tema e layout:** Interface com suporte a tema e estrutura de header, navbar, sidebars e footer.
+6. **Integração com a API:** Comunicação HTTP com o Back-end para dados e autenticação.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Tecnologias Utilizadas
 
-```
+* **React 19 + Vite:** Biblioteca de interface e bundler para desenvolvimento rápido.
+* **TypeScript:** Tipagem estática dos componentes, rotas e entidades.
+* **TanStack Router:** Roteamento file-based da aplicação.
+* **TanStack Query:** Cache e sincronização dos dados vindos da API.
+* **Zustand:** Estado global de autenticação com persistência no `localStorage`.
+* **Axios:** Cliente HTTP para as requisições ao Back-end.
+* **Tailwind CSS + DaisyUI:** Estilização utilitária e componentes de UI.
+* **Lucide React:** Ícones da interface.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧠 Conceitos Aplicados
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+* **SPA com roteamento por arquivos:** Organização das rotas em `src/routes` com TanStack Router.
+* **Estado global de auth:** Store Zustand com `persist` para manter usuário e token entre sessões.
+* **Data fetching declarativo:** React Query para buscar e cachear conteúdo da API.
+* **Tipagem de domínio:** Interfaces TypeScript espelhando a hierarquia educacional (Subject, Grade, Unit, Lesson, ContentBlocks).
+* **Componentização:** Layout (header, sidebars, footer) e cards reutilizáveis para o catálogo de estudos.
+* **UI moderna e responsiva:** Composição com Tailwind/DaisyUI voltada a uma experiência de estudo limpa e acessível.
